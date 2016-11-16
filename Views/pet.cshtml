@@ -1,0 +1,18 @@
+<h1>@Model.GetName()</h1>
+@if (@Model.GetIsAlive())
+{
+  <img src="/content/img/poobar.gif" alt="live tomagotchi">
+  <p><a href="/tomagotchi">Go back to list of Pets</a></p>
+  <p><strong>@Model.GetName()</strong></p>
+  <p><strong>Age:</strong> @Model.GetAge()</p>
+  <p><strong>Hunger:</strong> @Model.GetHungerLevel()</p>
+  <a href="/tomagotchi/@Model.GetID()/feed">Feed your pet</a>
+}
+else
+{
+  <img src="/content/img/deadTomagotchi.gif" alt="dead tomagotchi">
+  <p><a href="/tomagotchi">Go back to list of Pets</a></p>
+  <p><strong>@Model.GetName()</strong></p>
+  <p><strong>Age:</strong> Your tomagotchi is dead</p>
+  <p><strong>Hunger:</strong> >20</p>
+}
