@@ -26,6 +26,7 @@ namespace TomagotchiProgram
       Get["/tomagotchi/{id}"] = parameters =>
       {
         Tomagotchi currentPet = Tomagotchi.FindByID(parameters.id);
+        currentPet.GetDoneSleeping();
         if (currentPet.GetHungerLevel() >= 20)
         {
           currentPet.Kill();
@@ -41,6 +42,12 @@ namespace TomagotchiProgram
       {
         Tomagotchi currentPet = Tomagotchi.FindByID(parameters.id);
         currentPet.Feed();
+        return View["pet.cshtml", currentPet];
+      };
+      Get["/tomagotchi/{id}/sleep"] = parameters =>
+      {
+        Tomagotchi currentPet = Tomagotchi.FindByID(parameters.id);
+        currentPet.SetIsSleeping(true);
         return View["pet.cshtml", currentPet];
       };
       Post["/tomagotchi"] = _ =>

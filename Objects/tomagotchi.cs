@@ -8,10 +8,14 @@ namespace TomagotchiProgram.Objects
     private string _name;
     private int _age;
     private int _hungerLevel;
+    private int _tiredLevel;
     private int _id;
     private DateTime _birthday;
     private DateTime _lastFed;
+    private DateTime _startedSleeping;
+    private DateTime _lastSlept;
     private bool _isAlive;
+    private bool _isSleeping;
 
     private static List<Tomagotchi> _tomagotchiList = new List<Tomagotchi> {};
 
@@ -20,9 +24,11 @@ namespace TomagotchiProgram.Objects
       _birthday = DateTime.Now;
       _isAlive = true;
       _lastFed = DateTime.Now;
+      _lastSlept = DateTime.Now;
       _name = name;
       _age = 0;
-      _hungerLevel = 10;
+      _hungerLevel = 0;
+      _tiredLevel = 0;
       _tomagotchiList.Add(this);
       _id = _tomagotchiList.Count;
     }
@@ -64,6 +70,42 @@ namespace TomagotchiProgram.Objects
       return _isAlive;
     }
 
+    public bool GetIsSleeping()
+    {
+      return _isSleeping;
+    }
+
+    public void SetIsSleeping(bool sleep)
+    {
+      _isSleeping = sleep;
+      if (_isSleeping)
+      {
+        _startedSleeping = DateTime.Now;
+      }
+    }
+
+    public bool GetDoneSleeping()
+    {
+      int sleepLength = Convert.ToInt32(DateTime.Now.Subtract(_startedSleeping).TotalMinutes);
+      if (sleepLength >= 2)
+      {
+        _isSleeping = false;
+        _tiredLevel = 0;
+        _lastSlept = DateTime.Now;
+      }
+      return _isSleeping;
+    }
+
+    public int GetTiredLevel()
+    {
+      return _tiredLevel;
+    }
+
+    public void SetTiredLevel()
+    {
+      _tiredLevel = Convert.ToInt32(Math.Floor(DateTime.Now.Subtract(_lastSlept).TotalSeconds / 30));
+    }
+
     public void Kill()
     {
       _isAlive = false;
@@ -72,6 +114,8 @@ namespace TomagotchiProgram.Objects
     public void Resurrect()
     {
       _hungerLevel = 0;
+      _tiredLevel = 0;
+      _lastSlept = DateTime.Now;
       _lastFed = DateTime.Now;
       _isAlive = true;
     }

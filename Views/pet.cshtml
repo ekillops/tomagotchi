@@ -6,7 +6,12 @@
   <p><strong>@Model.GetName()</strong></p>
   <p><strong>Age:</strong> @Model.GetAge()</p>
   <p><strong>Hunger:</strong> @Model.GetHungerLevel()</p>
-  <a href="/tomagotchi/@Model.GetID()/feed">Feed your pet</a>
+  <p><strong>Sleepiness:</strong> @Model.GetTiredLevel()</p>
+  @if (@Model.GetIsSleeping() == false)
+  {
+    <a href="/tomagotchi/@Model.GetID()/sleep">Make @Model.GetName() sleep for two minutes</a>
+    <a href="/tomagotchi/@Model.GetID()/feed">Feed @Model.GetName()</a>
+  }
 }
 else
 {
